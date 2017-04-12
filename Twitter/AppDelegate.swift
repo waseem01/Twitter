@@ -7,15 +7,24 @@
 //
 
 import UIKit
+import OAuthSwift
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
+    var storyboard = UIStoryboard(name: "Main", bundle: nil)
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+
+        if User.currentUser != nil {
+            let initialController = storyboard.instantiateViewController(withIdentifier: "TweetsViewController") as UIViewController
+            let navigationController = UINavigationController.init(rootViewController: initialController)
+            window?.rootViewController = navigationController
+        } else {
+            window?.rootViewController = storyboard.instantiateInitialViewController()!
+        }
+
         return true
     }
 
@@ -41,6 +50,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
 
-
+    func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
+        if (url.scheme == "tweetyclone") {
+            OAuthSwift.handle(url: url)
+        }
+        return true
+    }
 }
 

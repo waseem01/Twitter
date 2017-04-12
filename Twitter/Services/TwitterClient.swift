@@ -6,19 +6,14 @@
 //  Copyright © 2017 Mohammed. All rights reserved.
 //
 
-import Unbox
 import OAuthSwift
 
 class TwitterClient {
 
-    private static let consumerKey = "hWooo1j45eBfi912rkQFkIfQc"
-    private static let consumerSecret = "9sdh02vdLcyAC2O8k0h8JbGruezX5MfaS6MDratXgKqkuiABQd"
+    static let consumerKey = "hWooo1j45eBfi912rkQFkIfQc"
+    static let consumerSecret = "9sdh02vdLcyAC2O8k0h8JbGruezX5MfaS6MDratXgKqkuiABQd"
     private let apiBaseUrl = "https://api.twitter.com"
     static let sharedInstance = TwitterClient()
-    var oauthToken: String!
-    var oauthTokenSecret: String!
-    var userId: String!
-    var userScreenName: String!
 
     let oauthswift  = OAuth1Swift(
         consumerKey:      consumerKey,
@@ -28,20 +23,71 @@ class TwitterClient {
         accessTokenUrl:   "https://api.twitter.com/oauth/access_token"
     )
 
-    func authorizeIfRequired() {
+    func get(url: String, parameters: [String : AnyObject]?, success: @escaping (AnyObject) -> Void, failure: @escaping (Error) -> Void) {
 
-        oauthswift.authorize(withCallbackURL: URL(string: "tweetyclone://oauth")!, success: { (credential, response, parameters) in
-            self.oauthToken = credential.oauthToken
-            self.oauthTokenSecret = credential.oauthTokenSecret
-            self.userId = parameters["user_id"] as! String
-            self.userScreenName = parameters["screen_name"] as! String
+        self.authorizeIfRequired(success: { twitterClient in
+            let params = (parameters?.count)! > 0 ? parameters : [:]
+            let oauthUrl = self.apiBaseUrl + url
+            let _ = self.oauthswift.client.get(oauthUrl, parameters: params!,
+                                               success: { response in
+                                                let jsonDict = try? response.jsonObject()
+                                                success(jsonDict as AnyObject)
+            },
+                                               failure: { error in
+                                                failure(error)
+            })
+        }, failure: { error in
+            failure(error)
+        })
+    }
 
-            print(credential)
-            print(response!)
-            print(parameters)
+    func post(url: String, parameters: [String : AnyObject]?, success: @escaping (AnyObject) -> Void, failure: @escaping (Error) -> Void) {
 
+        let params = (parameters?.count)! > 0 ? parameters : [:]
+        let oauthUrl = self.apiBaseUrl + url
+        let _ = self.oauthswift.client.post(oauthUrl, parameters: params!,
+                                           success: { response in
+                                            let jsonDict = try? response.jsonObject()
+                                            success(jsonDict as AnyObject)
+        },
+                                           failure: { error in
+                                            failure(error)
+        })
+    }
+
+
+    //MARK: - Private Methods
+    private func authorizeIfRequired(success: @escaping (TwitterClient) -> Void, failure: @escaping (Error) -> Void) {
+
+        let userDefaults = UserDefaults.standard
+        var oauthToken = userDefaults.string(forKey: "twitter:oauthToken") ?? ""
+        var oauthTokenSecret = userDefaults.string(forKey: "twitter:oauthTokenSecret") ?? ""
+
+        if User.currentUser != nil {
+            TwitterClient.sharedInstance.oauthswift.client = OAuthSwiftClient(consumerKey: TwitterClient.consumerKey,
+                                                                              consumerSecret: TwitterClient.consumerSecret,
+                                                                              oauthToken: oauthToken,
+                                                                              oauthTokenSecret: oauthTokenSecret,
+                                                                              version: .oauth1)
+            return success(self)
+        }
+
+        oauthswift.authorize(withCallbackURL: URL(string: "tweetyclone://oauth")!,
+                             success: { credential, response, parameters in
+
+                                oauthToken = credential.oauthToken
+                                oauthTokenSecret = credential.oauthTokenSecret
+
+                                userDefaults.setValue(oauthToken, forKey: "twitter:oauthToken")
+                                userDefaults.setValue(oauthTokenSecret, forKey: "twitter:oauthTokenSecret")
+                                userDefaults.synchronize()
+
+                                success(self)
+                                
         }, failure: { (error) in
-            print(error)
+            
+            failure(error)
         })
     }
 }
+
