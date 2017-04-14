@@ -192,6 +192,11 @@
                                 <action selector="logoutTapped:" destination="b29-Xc-Rpo" id="p0S-2D-Jgb"/>
                             </connections>
                         </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Item" id="Zd3-ew-JVB">
+                            <connections>
+                                <action selector="tweetTapped:" destination="b29-Xc-Rpo" id="1ux-51-rJi"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="F15-Pk-nwj" id="P5S-4v-MaS"/>
