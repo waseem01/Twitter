@@ -187,12 +187,33 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="Wfw-A1-r33">
-                        <barButtonItem key="leftBarButtonItem" title="Logout" id="yaD-S9-ajj">
+                        <nil key="title"/>
+                        <barButtonItem key="leftBarButtonItem" image="logout.png" id="yaD-S9-ajj">
                             <connections>
                                 <action selector="logoutTapped:" destination="b29-Xc-Rpo" id="p0S-2D-Jgb"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Item" id="Zd3-ew-JVB">
+                        <view key="titleView" contentMode="scaleToFill" id="eTg-fW-K27">
+                            <rect key="frame" x="167.5" y="2" width="40" height="40"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tweet.png" translatesAutoresizingMaskIntoConstraints="NO" id="wi5-0f-prN">
+                                    <rect key="frame" x="0.0" y="0.0" width="40" height="40"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    <color key="tintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="40" id="QNG-8I-gWZ"/>
+                                        <constraint firstAttribute="height" constant="40" id="p0n-es-j2I"/>
+                                    </constraints>
+                                </imageView>
+                            </subviews>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstItem="wi5-0f-prN" firstAttribute="centerX" secondItem="eTg-fW-K27" secondAttribute="centerX" id="SIk-Bc-BaY"/>
+                                <constraint firstItem="wi5-0f-prN" firstAttribute="centerY" secondItem="eTg-fW-K27" secondAttribute="centerY" id="jQd-G4-ZuV"/>
+                            </constraints>
+                        </view>
+                        <barButtonItem key="rightBarButtonItem" image="feather-icon.png" id="Zd3-ew-JVB">
                             <connections>
                                 <action selector="tweetTapped:" destination="b29-Xc-Rpo" id="1ux-51-rJi"/>
                             </connections>
@@ -263,5 +284,8 @@
     </scenes>
     <resources>
         <image name="angry-bird.png" width="256" height="256"/>
+        <image name="feather-icon.png" width="30" height="30"/>
+        <image name="logout.png" width="25" height="25"/>
+        <image name="tweet.png" width="40" height="40"/>
     </resources>
 </document>
