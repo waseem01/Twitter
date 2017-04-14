@@ -20,7 +20,6 @@ class Tweet: NSObject {
     var createdAt: Date?
 
     init(dictionary: NSDictionary) {
-        time = "7h"
         text = dictionary["text"] as? String
         
         if dictionary["user"] != nil {
@@ -37,8 +36,15 @@ class Tweet: NSObject {
         if createdAtString != nil {
             let formatter = DateFormatter()
             formatter.dateFormat = "EEE MMM d HH:mm:ss Z y"
-            formatter.date
             createdAt = formatter.date(from: createdAtString!)
+            if Int(Date().timeIntervalSince(createdAt!)/3600) > 0 {
+                time = String(format: "%dh", Int(Date().timeIntervalSince(createdAt!)/3600))
+            } else if Int(Date().timeIntervalSince(createdAt!)/60) > 0 {
+                time = String(format: "%dm", Int(Date().timeIntervalSince(createdAt!)/60))
+            } else {
+                formatter.dateFormat = "MMM d"
+                time = String(format: "%@", formatter.string(from: createdAt!))
+            }
         }
     }
 
@@ -63,5 +69,9 @@ class Tweet: NSObject {
         }, failure: { error in
             failure(error)
         })
+    }
+
+    func hours(from date: Date) -> Int {
+        return Calendar.current.dateComponents([.hour], from: date, to: Date()).hour ?? 0
     }
 }
