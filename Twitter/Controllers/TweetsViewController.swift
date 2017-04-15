@@ -12,6 +12,10 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
 
     var tweets = [Tweet]()
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var logoutButton: UIBarButtonItem!
+    @IBOutlet weak var twitterLogo: UIImageView!
+    @IBOutlet weak var tweetButton: UIBarButtonItem!
+
 //    @IBOutlet weak var tweetContainerView: TweetContainerView!
 
     override func viewDidLoad() {
@@ -21,6 +25,12 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         tableView.dataSource = self
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 120
+        logoutButton.tintColor = Colors.twitterBlue
+        tweetButton.tintColor = Colors.twitterBlue
+        let image = UIImage(named: "tweet")?.withRenderingMode(.alwaysTemplate)
+        twitterLogo.contentMode = .scaleAspectFit
+        twitterLogo.tintColor = Colors.twitterBlue
+        twitterLogo.image = image
 
         Tweet().getTweets(success: { tweets in
             self.tweets = tweets
@@ -59,9 +69,5 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         let cell = tableView.dequeueReusableCell(withIdentifier: "TweetCell") as! TweetCell
         cell.tweet = tweets[indexPath.row]
         return cell
-    }
-
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-
     }
 }

@@ -11,6 +11,9 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TweetControlBar" customModule="Twitter" customModuleProvider="target">
             <connections>
+                <outlet property="favoriteButton" destination="35Y-Tc-bVf" id="ArB-hL-dsq"/>
+                <outlet property="replyButton" destination="fQq-Hr-BN8" id="XNQ-l2-ZRE"/>
+                <outlet property="retweetButton" destination="JhX-4r-kTY" id="3xS-gL-wwR"/>
                 <outlet property="tweetControlBar" destination="iN0-l3-epB" id="Eyh-8K-frE"/>
             </connections>
         </placeholder>
@@ -19,33 +22,33 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="15"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fQq-Hr-BN8">
-                    <rect key="frame" x="0.0" y="0.0" width="15" height="15"/>
+                <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fQq-Hr-BN8">
+                    <rect key="frame" x="0.0" y="2.5" width="10" height="10"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="15" id="SJR-dZ-d2j"/>
-                        <constraint firstAttribute="width" constant="15" id="ft1-Zr-NUL"/>
+                        <constraint firstAttribute="height" constant="10" id="SJR-dZ-d2j"/>
+                        <constraint firstAttribute="width" constant="10" id="ft1-Zr-NUL"/>
                     </constraints>
                     <state key="normal" image="reply-icon.png"/>
                     <connections>
                         <action selector="replyTapped:" destination="-1" eventType="touchUpInside" id="2fK-BA-3Jl"/>
                     </connections>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JhX-4r-kTY">
-                    <rect key="frame" x="358" y="0.0" width="15" height="15"/>
+                <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JhX-4r-kTY">
+                    <rect key="frame" x="363" y="2.5" width="10" height="10"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="15" id="I6W-c7-syW"/>
-                        <constraint firstAttribute="width" constant="15" id="jha-bF-0of"/>
+                        <constraint firstAttribute="height" constant="10" id="I6W-c7-syW"/>
+                        <constraint firstAttribute="width" constant="10" id="jha-bF-0of"/>
                     </constraints>
                     <state key="normal" image="star-icon.png"/>
                     <connections>
                         <action selector="favoriteTapped:" destination="-1" eventType="touchUpInside" id="DZq-Ft-3Ek"/>
                     </connections>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="35Y-Tc-bVf">
-                    <rect key="frame" x="179.5" y="0.0" width="15" height="15"/>
+                <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="35Y-Tc-bVf">
+                    <rect key="frame" x="182" y="2.5" width="10" height="10"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="15" id="1R4-hu-eNu"/>
-                        <constraint firstAttribute="width" constant="15" id="A51-Eb-rkd"/>
+                        <constraint firstAttribute="height" constant="10" id="1R4-hu-eNu"/>
+                        <constraint firstAttribute="width" constant="10" id="A51-Eb-rkd"/>
                     </constraints>
                     <state key="normal" image="retweet-icon.png"/>
                     <connections>
@@ -55,14 +58,11 @@
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstAttribute="bottom" secondItem="fQq-Hr-BN8" secondAttribute="bottom" id="1a9-7C-XBx"/>
                 <constraint firstAttribute="trailing" secondItem="JhX-4r-kTY" secondAttribute="trailing" constant="2" id="AeP-Hd-NYk"/>
-                <constraint firstAttribute="bottom" secondItem="JhX-4r-kTY" secondAttribute="bottom" id="HFC-Il-eHC"/>
                 <constraint firstItem="35Y-Tc-bVf" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="JPu-Ch-Phb"/>
-                <constraint firstItem="35Y-Tc-bVf" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="VaD-Kn-fOb"/>
-                <constraint firstItem="JhX-4r-kTY" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="co1-zB-4oE"/>
-                <constraint firstItem="fQq-Hr-BN8" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="htJ-H8-E4m"/>
-                <constraint firstAttribute="bottom" secondItem="35Y-Tc-bVf" secondAttribute="bottom" id="sL7-PT-tFM"/>
+                <constraint firstItem="fQq-Hr-BN8" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="TaM-dr-gUq"/>
+                <constraint firstItem="35Y-Tc-bVf" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="Wuy-ok-EDT"/>
+                <constraint firstItem="JhX-4r-kTY" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="jPT-Ik-d4n"/>
                 <constraint firstItem="fQq-Hr-BN8" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="uxj-pi-pkC"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
