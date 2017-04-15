@@ -16,7 +16,7 @@ class User: NSObject {
     var name: String?
     var user_id: Int?
     var screeName: String?
-    var profileImageUrl: String?
+    var profileImageUrl: URL?
     var tagLine: String?
     var dictionary: NSDictionary?
 
@@ -25,7 +25,8 @@ class User: NSObject {
         name = dictionary["name"] as? String
         user_id = dictionary["id"] as? Int
         screeName = dictionary["screen_name"] as? String
-        profileImageUrl = dictionary["profile_image_url"] as? String
+        let url = dictionary["profile_image_url_https"]!
+        profileImageUrl = URL(string: (url as? String)!)
         tagLine = dictionary["description"] as? String
     }
 

@@ -28,10 +28,8 @@ class PostTweetViewController: UIViewController, UITextViewDelegate {
         setupPlaceholder()
         tweetButton.layer.cornerRadius = 3
         tweetButton.clipsToBounds = true
-        let imageUrl = URL(string: (User.currentUser?.profileImageUrl)!)
         tweetButton.backgroundColor = Colors.twitterBlue
-        userImageView.backgroundColor = .red
-        userImageView.setImageWith(imageUrl!)
+        userImageView.setImageWith((User.currentUser?.profileImageUrl)!)
         userNameLabel.text = User.currentUser?.name
         userHandle.text = String(format: "@%@", (User.currentUser?.screeName)!)
     }
