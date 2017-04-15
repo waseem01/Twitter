@@ -17,13 +17,12 @@ class PostTweetViewController: UIViewController, UITextViewDelegate {
     @IBOutlet weak var tweetButton: UIButton!
     @IBOutlet weak var userNameLabel: UILabel!
     @IBOutlet weak var userHandle: UILabel!
-    
-    
+
     var placeholder : UILabel!
+    var replyTweetHandle: String?
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        tweetTextView.becomeFirstResponder()
         tweetTextView.delegate = self
         setupPlaceholder()
         tweetButton.layer.cornerRadius = 3
@@ -32,6 +31,11 @@ class PostTweetViewController: UIViewController, UITextViewDelegate {
         userImageView.setImageWith((User.currentUser?.profileImageUrl)!)
         userNameLabel.text = User.currentUser?.name
         userHandle.text = String(format: "@%@", (User.currentUser?.screeName)!)
+        if replyTweetHandle != nil {
+            tweetTextView.text = replyTweetHandle! + " "
+            updateTweetView(tweetTextView)
+        }
+        tweetTextView.becomeFirstResponder()
     }
 
     @IBAction func postTweetTapped(_ sender: UIButton) {
@@ -49,6 +53,10 @@ class PostTweetViewController: UIViewController, UITextViewDelegate {
     }
 
     func textViewDidChange(_ textView: UITextView) {
+        updateTweetView(textView)
+    }
+
+    private func updateTweetView(_ textView: UITextView) {
         placeholder.isHidden = !textView.text.isEmpty
         let count = textView.text.characters.count
         let tweetCount = 140-count

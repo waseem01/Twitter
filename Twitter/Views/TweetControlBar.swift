@@ -46,7 +46,6 @@ class TweetControlBar: UIView {
         tweetControlBar.frame = bounds
         tweetControlBar.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         addSubview(tweetControlBar)
-        styleButtons()
     }
 
     func loadViewFromNib() -> UIView {
@@ -58,21 +57,6 @@ class TweetControlBar: UIView {
         return view
     }
 
-    private func styleButtons() {
-
-        [(String, UIButton!)](
-            [
-                ("reply-icon", replyButton),
-                ("retweet-icon", retweetButton),
-                ("star-icon", favoriteButton)
-            ]
-            ).forEach { (imageName, button) -> () in
-                let origImage = UIImage(named: imageName);
-                let tintedImage = origImage?.withRenderingMode(UIImageRenderingMode.alwaysTemplate)
-                button.setImage(tintedImage, for: .normal)
-                button.tintColor = .lightGray
-        }
-    }
 
     @IBAction func replyTapped(_ sender: UIButton) {
     }

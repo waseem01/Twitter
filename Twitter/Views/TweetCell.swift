@@ -9,6 +9,10 @@
 import UIKit
 import AFNetworking
 
+protocol TweetCellDelegate {
+    func tweetCell(replyToTweetInCell cell: TweetCell)
+}
+
 class TweetCell: UITableViewCell {
 
     @IBOutlet weak var containerView: UIView!
@@ -17,7 +21,14 @@ class TweetCell: UITableViewCell {
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var handleLabel: UILabel!
     @IBOutlet weak var timeLabel: UILabel!
-    @IBOutlet weak var tweetControlBarView: TweetControlBar!
+    @IBOutlet weak var tweetControlBarView: UIView!
+    @IBOutlet weak var retweetCountLabel: UILabel!
+    @IBOutlet weak var favoriteCountLabel: UILabel!
+    @IBOutlet weak var replyButton: UIButton!
+    @IBOutlet weak var retweetButton: UIButton!
+    @IBOutlet weak var favoriteButton: UIButton!
+
+    var delegate: TweetCellDelegate?
 
     var tweet = Tweet() {
         didSet {
@@ -31,8 +42,8 @@ class TweetCell: UITableViewCell {
         containerView.layer.shadowOffset = CGSize(width: 0, height: 1)
         containerView.layer.shadowOpacity = 0.25
         containerView.layer.shadowRadius = 2
-        contentView.backgroundColor = .clear //TODO 
-//        tweetControlView.addSubview(tweetControlBar)
+        contentView.backgroundColor = .clear
+        styleButtons()
     }
 
     func updateCell(withTweet: Tweet) {
@@ -43,13 +54,42 @@ class TweetCell: UITableViewCell {
         userImageView.setImageWith(tweet.profileImageUrl!)
         userImageView.layer.cornerRadius = 3
         userImageView.clipsToBounds = true
+        
         if tweet.retweetCount! > 0 {
-            tweetControlBarView.retweetCount = tweet.retweetCount!
+            retweetCountLabel.text = String(tweet.retweetCount!)
         }
         if tweet.favoriteCount! > 0 {
-            tweetControlBarView.favoriteCount = tweet.favoriteCount!
+            favoriteCountLabel.text = String(tweet.favoriteCount!)
         }
     }
+
+    private func styleButtons() {
+
+        [(String, UIButton!)](
+            [
+                ("reply-icon", replyButton),
+                ("retweet-icon", retweetButton),
+                ("star-icon", favoriteButton)
+            ]
+            ).forEach { (imageName, button) -> () in
+                let origImage = UIImage(named: imageName);
+                let tintedImage = origImage?.withRenderingMode(UIImageRenderingMode.alwaysTemplate)
+                button.setImage(tintedImage, for: .normal)
+                button.tintColor = .lightGray
+        }
+    }
+
+    @IBAction func replyTapped(_ sender: UIButton) {
+        delegate?.tweetCell(replyToTweetInCell: self)
+    }
+
+    @IBAction func retweetTapped(_ sender: UIButton) {
+    }
+
+    @IBAction func favoriteTapped(_ sender: UIButton) {
+    }
+    
+
 
     //MARK: Properties
 //    private lazy var tweetControlBar: TweetControlBar = {

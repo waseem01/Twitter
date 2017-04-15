@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, TweetCellDelegate {
 
     var tweets = [Tweet]()
     @IBOutlet weak var tableView: UITableView!
@@ -46,6 +46,12 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
             let cell = sender as! TweetCell
             let indexPath = tableView.indexPath(for: cell)
             tweetDetailsViewController.tweet = tweets[(indexPath?.row)!]
+        } else if segue.identifier == "postTweet" {
+            let postTweetViewController = segue.destination as! PostTweetViewController
+            let cell = sender as! TweetCell
+            let indexPath = tableView.indexPath(for: cell)
+            let tweet = tweets[(indexPath?.row)!]
+            postTweetViewController.replyTweetHandle = tweet.handle!
         }
     }
 
@@ -68,6 +74,11 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TweetCell") as! TweetCell
         cell.tweet = tweets[indexPath.row]
+        cell.delegate = self
         return cell
+    }
+
+    func tweetCell(replyToTweetInCell cell: TweetCell) {
+        performSegue(withIdentifier: "postTweet", sender: cell)
     }
 }
