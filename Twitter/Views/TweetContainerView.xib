@@ -21,17 +21,17 @@
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="tOa-VX-W7l">
-            <rect key="frame" x="0.0" y="0.0" width="529" height="133"/>
+            <rect key="frame" x="0.0" y="0.0" width="529" height="140"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="tweetLabel" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pm6-1A-G8m" userLabel="tweet Label">
-                    <rect key="frame" x="82" y="28.5" width="447" height="79.5"/>
+                    <rect key="frame" x="82" y="28.5" width="447" height="86.5"/>
                     <fontDescription key="fontDescription" type="boldSystem" pointSize="11"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="aSS-jd-3tz">
-                    <rect key="frame" x="2" y="29" width="75" height="75"/>
+                    <rect key="frame" x="2" y="32.5" width="75" height="75"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="75" id="2Qi-YK-nDF"/>
                         <constraint firstAttribute="height" constant="75" id="hBD-0q-dHN"/>
@@ -56,7 +56,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Kwt-CO-IRI" customClass="TweetControlBar" customModule="Twitter" customModuleProvider="target">
-                    <rect key="frame" x="82" y="113" width="445" height="15"/>
+                    <rect key="frame" x="82" y="120" width="445" height="15"/>
                     <color key="backgroundColor" red="0.085984490270000005" green="0.79282158719999996" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="15" id="x3A-kO-nTm"/>
