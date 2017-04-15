@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12118" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TweetContainerView" customModule="Twitter" customModuleProvider="target">
+            <connections>
+                <outlet property="containerView" destination="tOa-VX-W7l" id="4Ir-C9-30r"/>
+                <outlet property="handleLabel" destination="egx-EF-FdV" id="1KP-92-eFy"/>
+                <outlet property="nameLabel" destination="GQv-ei-NNL" id="F0Z-bt-Qoz"/>
+                <outlet property="timeLabel" destination="9dl-Yh-HdM" id="EYx-3x-VzV"/>
+                <outlet property="tweetLabel" destination="pm6-1A-G8m" id="bZQ-5s-gGY"/>
+                <outlet property="userImageView" destination="aSS-jd-3tz" id="0aP-aP-cGL"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="tOa-VX-W7l">
+            <rect key="frame" x="0.0" y="0.0" width="529" height="133"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="tweetLabel" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pm6-1A-G8m" userLabel="tweet Label">
+                    <rect key="frame" x="82" y="28.5" width="447" height="79.5"/>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="11"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="aSS-jd-3tz">
+                    <rect key="frame" x="2" y="29" width="75" height="75"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="75" id="2Qi-YK-nDF"/>
+                        <constraint firstAttribute="height" constant="75" id="hBD-0q-dHN"/>
+                    </constraints>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="252" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="nameLabel" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GQv-ei-NNL">
+                    <rect key="frame" x="82" y="10" width="61" height="13.5"/>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="11"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="handleLabel" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="egx-EF-FdV">
+                    <rect key="frame" x="148" y="10" width="325.5" height="13.5"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="timeLabel" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9dl-Yh-HdM">
+                    <rect key="frame" x="475.5" y="10" width="51.5" height="13.5"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Kwt-CO-IRI" customClass="TweetControlBar" customModule="Twitter" customModuleProvider="target">
+                    <rect key="frame" x="82" y="113" width="445" height="15"/>
+                    <color key="backgroundColor" red="0.085984490270000005" green="0.79282158719999996" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="15" id="x3A-kO-nTm"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="Kwt-CO-IRI" secondAttribute="trailing" constant="2" id="1iB-bg-HtC"/>
+                <constraint firstAttribute="trailing" secondItem="pm6-1A-G8m" secondAttribute="trailing" id="50F-lQ-h8L"/>
+                <constraint firstItem="9dl-Yh-HdM" firstAttribute="top" secondItem="tOa-VX-W7l" secondAttribute="top" constant="10" id="5bN-Dg-lIg"/>
+                <constraint firstItem="GQv-ei-NNL" firstAttribute="top" secondItem="tOa-VX-W7l" secondAttribute="top" constant="10" id="HF8-MR-kk5"/>
+                <constraint firstItem="9dl-Yh-HdM" firstAttribute="leading" secondItem="egx-EF-FdV" secondAttribute="trailing" constant="2" id="JEo-pq-hF5"/>
+                <constraint firstItem="egx-EF-FdV" firstAttribute="leading" secondItem="GQv-ei-NNL" secondAttribute="trailing" constant="5" id="KKK-Gk-gPv"/>
+                <constraint firstItem="egx-EF-FdV" firstAttribute="top" secondItem="tOa-VX-W7l" secondAttribute="top" constant="10" id="Ztr-Rx-XYY"/>
+                <constraint firstItem="pm6-1A-G8m" firstAttribute="top" secondItem="GQv-ei-NNL" secondAttribute="bottom" constant="5" id="eRz-tV-ovz"/>
+                <constraint firstItem="pm6-1A-G8m" firstAttribute="leading" secondItem="aSS-jd-3tz" secondAttribute="trailing" constant="5" id="eTQ-fS-rOC"/>
+                <constraint firstItem="aSS-jd-3tz" firstAttribute="centerY" secondItem="tOa-VX-W7l" secondAttribute="centerY" id="lAo-46-Efd"/>
+                <constraint firstItem="GQv-ei-NNL" firstAttribute="leading" secondItem="aSS-jd-3tz" secondAttribute="trailing" constant="5" id="nFN-So-pFT"/>
+                <constraint firstItem="Kwt-CO-IRI" firstAttribute="leading" secondItem="aSS-jd-3tz" secondAttribute="trailing" constant="5" id="puo-fZ-XZm"/>
+                <constraint firstAttribute="trailing" secondItem="9dl-Yh-HdM" secondAttribute="trailing" constant="2" id="r7k-Xn-bF0"/>
+                <constraint firstItem="aSS-jd-3tz" firstAttribute="leading" secondItem="tOa-VX-W7l" secondAttribute="leading" constant="2" id="t9M-MD-nlo"/>
+                <constraint firstAttribute="bottom" secondItem="Kwt-CO-IRI" secondAttribute="bottom" constant="5" id="tAc-p4-4kR"/>
+                <constraint firstItem="Kwt-CO-IRI" firstAttribute="top" secondItem="pm6-1A-G8m" secondAttribute="bottom" constant="5" id="z8b-bI-X44"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <nil key="simulatedTopBarMetrics"/>
+            <nil key="simulatedBottomBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="87.5" y="-342.5"/>
+        </view>
+    </objects>
+</document>

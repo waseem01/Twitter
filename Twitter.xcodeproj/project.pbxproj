@@ -19,6 +19,8 @@
 		1C5103DE1EA1C530005B9632 /* reply-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C5103DB1EA1C530005B9632 /* reply-icon.png */; };
 		1C5103DF1EA1C530005B9632 /* retweet-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C5103DC1EA1C530005B9632 /* retweet-icon.png */; };
 		1C5103E01EA1C530005B9632 /* star-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C5103DD1EA1C530005B9632 /* star-icon.png */; };
+		1C5103E61EA1DB99005B9632 /* TweetContainerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C5103E51EA1DB99005B9632 /* TweetContainerView.xib */; };
+		1C5103E81EA1DBFB005B9632 /* TweetContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C5103E71EA1DBFB005B9632 /* TweetContainerView.swift */; };
 		1CD02A0B1EA0859A00BAD759 /* tweet.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CD02A0A1EA0859A00BAD759 /* tweet.png */; };
 		1CD02A0D1EA0863900BAD759 /* logout.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CD02A0C1EA0863900BAD759 /* logout.png */; };
 		1CD02A0F1EA0894F00BAD759 /* feather-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CD02A0E1EA0894F00BAD759 /* feather-icon.png */; };
@@ -41,6 +43,8 @@
 		1C5103DB1EA1C530005B9632 /* reply-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "reply-icon.png"; path = "Resources/reply-icon.png"; sourceTree = "<group>"; };
 		1C5103DC1EA1C530005B9632 /* retweet-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "retweet-icon.png"; path = "Resources/retweet-icon.png"; sourceTree = "<group>"; };
 		1C5103DD1EA1C530005B9632 /* star-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "star-icon.png"; path = "Resources/star-icon.png"; sourceTree = "<group>"; };
+		1C5103E51EA1DB99005B9632 /* TweetContainerView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TweetContainerView.xib; path = Views/TweetContainerView.xib; sourceTree = "<group>"; };
+		1C5103E71EA1DBFB005B9632 /* TweetContainerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TweetContainerView.swift; path = Views/TweetContainerView.swift; sourceTree = "<group>"; };
 		1CD02A0A1EA0859A00BAD759 /* tweet.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = tweet.png; path = Resources/tweet.png; sourceTree = "<group>"; };
 		1CD02A0C1EA0863900BAD759 /* logout.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = logout.png; path = Resources/logout.png; sourceTree = "<group>"; };
 		1CD02A0E1EA0894F00BAD759 /* feather-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "feather-icon.png"; path = "Resources/feather-icon.png"; sourceTree = "<group>"; };
@@ -119,6 +123,8 @@
 				1C0CB89C1EA015010099C4E2 /* TweetCell.swift */,
 				1C5103D71EA1C325005B9632 /* TweetControlBar.xib */,
 				1C5103D91EA1C3E2005B9632 /* TweetControlBar.swift */,
+				1C5103E51EA1DB99005B9632 /* TweetContainerView.xib */,
+				1C5103E71EA1DBFB005B9632 /* TweetContainerView.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -248,6 +254,7 @@
 				1C5103D81EA1C325005B9632 /* TweetControlBar.xib in Resources */,
 				1CEC6FFF1E9D83A600450F00 /* Main.storyboard in Resources */,
 				1CD02A0B1EA0859A00BAD759 /* tweet.png in Resources */,
+				1C5103E61EA1DB99005B9632 /* TweetContainerView.xib in Resources */,
 				1C5103DF1EA1C530005B9632 /* retweet-icon.png in Resources */,
 				1CD02A0D1EA0863900BAD759 /* logout.png in Resources */,
 				1CD02A0F1EA0894F00BAD759 /* feather-icon.png in Resources */,
@@ -309,6 +316,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1C5103E81EA1DBFB005B9632 /* TweetContainerView.swift in Sources */,
 				1C0F48331E9EC4A50042D06E /* User.swift in Sources */,
 				1C0CB89D1EA015010099C4E2 /* TweetCell.swift in Sources */,
 				1C0F48351E9EC4AF0042D06E /* Tweet.swift in Sources */,
