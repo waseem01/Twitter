@@ -18,9 +18,20 @@ class Tweet: NSObject {
     var profileImageUrl: URL?
     var createdAtString: String?
     var createdAt: Date?
+    var retweeted: Bool = false
+    var favorited: Bool = false
+    var retweetCount: Int?
+    var favoriteCount: Int?
+    var retweeterScreenName: String?
+    var userScreenName: String?
 
     init(dictionary: NSDictionary) {
         text = dictionary["text"] as? String
+        retweeted = dictionary["retweeted"] as? Int != 0
+        favorited = dictionary["favorited"] as? Int != 0
+        retweetCount = dictionary["retweet_count"] as? Int
+        favoriteCount = dictionary["favorite_count"] as? Int
+        userScreenName = dictionary.value(forKeyPath: "user.screen_name") as? String
         
         if dictionary["user"] != nil {
             let userDictionary = dictionary["user"]! as! NSDictionary
@@ -46,6 +57,17 @@ class Tweet: NSObject {
                 time = String(format: "%@", formatter.string(from: createdAt!))
             }
         }
+
+//        if let retweetedStatus = dictionary["retweeted_status"] as? NSDictionary {
+//            var retweetedTweet = TweetState.Entity(dictionary: retweetedStatus)
+//            let retweeterScreenName = userScreenName
+
+//            retweetedTweet.retweeted = retweetedTweet.retweeted || retweeted
+//            retweetedTweet.favorited = retweetedTweet.favorited || favorited
+
+//            self = retweetedTweet
+//            self.retweeterScreenName = retweeterScreenName
+//        }
     }
 
     convenience override init() {

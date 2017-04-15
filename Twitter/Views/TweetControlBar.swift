@@ -14,6 +14,22 @@ class TweetControlBar: UIView {
     @IBOutlet weak var replyButton: UIButton!
     @IBOutlet weak var retweetButton: UIButton!
     @IBOutlet weak var favoriteButton: UIButton!
+    @IBOutlet weak var retweetCountLabel: UILabel!
+    @IBOutlet weak var favoriteCountLabel: UILabel!
+
+    var retweetCount = Int() {
+        didSet {
+            retweetCountLabel.isHidden = false
+            retweetCountLabel.text = String(retweetCount)
+        }
+    }
+
+    var favoriteCount = Int() {
+        didSet {
+            favoriteCountLabel.isHidden = false
+            favoriteCountLabel.text = String(favoriteCount)
+        }
+    }
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -30,10 +46,7 @@ class TweetControlBar: UIView {
         tweetControlBar.frame = bounds
         tweetControlBar.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         addSubview(tweetControlBar)
-
-        styleButton(button: replyButton)
-        styleButton(button: retweetButton)
-        styleButton(button: favoriteButton)
+        styleButtons()
     }
 
     func loadViewFromNib() -> UIView {
@@ -45,22 +58,20 @@ class TweetControlBar: UIView {
         return view
     }
 
-    private func styleButton(button: UIButton) {
-        var image = UIImage()
+    private func styleButtons() {
 
-        switch button.tag {
-        case 1:
-            image = (UIImage(named: "reply-icon")?.withRenderingMode(.alwaysTemplate))!
-        case 2:
-            image = (UIImage(named: "retweet-icon")?.withRenderingMode(.alwaysTemplate))!
-        case 3:
-            image = (UIImage(named: "star-icon")?.withRenderingMode(.alwaysTemplate))!
-        default : break
+        [(String, UIButton!)](
+            [
+                ("reply-icon", replyButton),
+                ("retweet-icon", retweetButton),
+                ("star-icon", favoriteButton)
+            ]
+            ).forEach { (imageName, button) -> () in
+                let origImage = UIImage(named: imageName);
+                let tintedImage = origImage?.withRenderingMode(UIImageRenderingMode.alwaysTemplate)
+                button.setImage(tintedImage, for: .normal)
+                button.tintColor = .lightGray
         }
-
-        button.imageView?.contentMode = .scaleAspectFit
-        button.imageView?.tintColor = .gray
-        button.imageView?.image = image
     }
 
     @IBAction func replyTapped(_ sender: UIButton) {

@@ -17,6 +17,7 @@ class TweetCell: UITableViewCell {
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var handleLabel: UILabel!
     @IBOutlet weak var timeLabel: UILabel!
+    @IBOutlet weak var tweetControlBarView: TweetControlBar!
 
     var tweet = Tweet() {
         didSet {
@@ -42,6 +43,12 @@ class TweetCell: UITableViewCell {
         userImageView.setImageWith(tweet.profileImageUrl!)
         userImageView.layer.cornerRadius = 3
         userImageView.clipsToBounds = true
+        if tweet.retweetCount! > 0 {
+            tweetControlBarView.retweetCount = tweet.retweetCount!
+        }
+        if tweet.favoriteCount! > 0 {
+            tweetControlBarView.favoriteCount = tweet.favoriteCount!
+        }
     }
 
     //MARK: Properties

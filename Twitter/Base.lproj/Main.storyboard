@@ -171,6 +171,7 @@
                                             <outlet property="handleLabel" destination="F37-Ys-IWS" id="E5G-oP-ae8"/>
                                             <outlet property="nameLabel" destination="WWL-Jn-ntt" id="dke-gg-zXR"/>
                                             <outlet property="timeLabel" destination="DZ7-Ja-SMj" id="yyc-dm-wKC"/>
+                                            <outlet property="tweetControlBarView" destination="LlH-Pe-Us7" id="lrc-K1-Q3n"/>
                                             <outlet property="tweetLabel" destination="ySE-mh-p9s" id="UOc-wd-15w"/>
                                             <outlet property="userImageView" destination="yTK-0d-6aL" id="32m-mi-T3g"/>
                                             <segue destination="PUw-Ds-pbk" kind="show" identifier="showTweetDetails" id="y1F-XR-buj"/>
