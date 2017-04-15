@@ -12,7 +12,7 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
 
     var tweets = [Tweet]()
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var tweetContainerView: TweetContainerView!
+//    @IBOutlet weak var tweetContainerView: TweetContainerView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -61,11 +61,11 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 
-        tweetContainerView.isHidden = !tweetContainerView.isHidden
-        tweetContainerView.tweet = tweets[indexPath.row]
-        tweetContainerView.transform = CGAffineTransform(scaleX: 0, y: 0)
-        UIView.animate(withDuration: 0.4, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 5, options: .curveEaseInOut, animations: {() -> Void in
-            self.tweetContainerView.transform = .identity
-        }, completion: { _ in })
+//        tweetContainerView.isHidden = !tweetContainerView.isHidden
+//        tweetContainerView.tweet = tweets[indexPath.row]
+//        tweetContainerView.transform = CGAffineTransform(scaleX: 0, y: 0)
+//        UIView.animate(withDuration: 0.4, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 5, options: .curveEaseInOut, animations: {() -> Void in
+//            self.tweetContainerView.transform = .identity
+//        }, completion: { _ in })
     }
 }
