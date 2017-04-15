@@ -25,6 +25,7 @@
 		1C62185F1EA2744D00DFC792 /* PostTweetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C62185E1EA2744D00DFC792 /* PostTweetView.swift */; };
 		1C6218611EA288F200DFC792 /* PostTweetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6218601EA288F200DFC792 /* PostTweetViewController.swift */; };
 		1C6218631EA2964A00DFC792 /* close.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C6218621EA2964A00DFC792 /* close.png */; };
+		1C6218651EA2A3C400DFC792 /* TweetDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6218641EA2A3C400DFC792 /* TweetDetailsViewController.swift */; };
 		1CD02A0B1EA0859A00BAD759 /* tweet.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CD02A0A1EA0859A00BAD759 /* tweet.png */; };
 		1CD02A0D1EA0863900BAD759 /* logout.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CD02A0C1EA0863900BAD759 /* logout.png */; };
 		1CD02A0F1EA0894F00BAD759 /* feather-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CD02A0E1EA0894F00BAD759 /* feather-icon.png */; };
@@ -53,6 +54,7 @@
 		1C62185E1EA2744D00DFC792 /* PostTweetView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostTweetView.swift; path = Views/PostTweetView.swift; sourceTree = "<group>"; };
 		1C6218601EA288F200DFC792 /* PostTweetViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostTweetViewController.swift; path = Controllers/PostTweetViewController.swift; sourceTree = "<group>"; };
 		1C6218621EA2964A00DFC792 /* close.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = close.png; path = Resources/close.png; sourceTree = "<group>"; };
+		1C6218641EA2A3C400DFC792 /* TweetDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TweetDetailsViewController.swift; path = Controllers/TweetDetailsViewController.swift; sourceTree = "<group>"; };
 		1CD02A0A1EA0859A00BAD759 /* tweet.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = tweet.png; path = Resources/tweet.png; sourceTree = "<group>"; };
 		1CD02A0C1EA0863900BAD759 /* logout.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = logout.png; path = Resources/logout.png; sourceTree = "<group>"; };
 		1CD02A0E1EA0894F00BAD759 /* feather-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "feather-icon.png"; path = "Resources/feather-icon.png"; sourceTree = "<group>"; };
@@ -121,6 +123,7 @@
 			children = (
 				1C3B30001E9E6EF500069455 /* LoginViewController.swift */,
 				1C0F48561E9F37130042D06E /* TweetsViewController.swift */,
+				1C6218641EA2A3C400DFC792 /* TweetDetailsViewController.swift */,
 				1C6218601EA288F200DFC792 /* PostTweetViewController.swift */,
 			);
 			name = Controllers;
@@ -340,6 +343,7 @@
 				1C6218611EA288F200DFC792 /* PostTweetViewController.swift in Sources */,
 				1CEC6FFA1E9D83A600450F00 /* AppDelegate.swift in Sources */,
 				1C62185F1EA2744D00DFC792 /* PostTweetView.swift in Sources */,
+				1C6218651EA2A3C400DFC792 /* TweetDetailsViewController.swift in Sources */,
 				1C5103DA1EA1C3E2005B9632 /* TweetControlBar.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

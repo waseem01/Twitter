@@ -22,12 +22,21 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 120
 
-//        Tweet().getTweets(success: { tweets in
-//            self.tweets = tweets
-//            self.tableView.reloadData()
-//        }) { error in
-//            print(error)
-//        }
+        Tweet().getTweets(success: { tweets in
+            self.tweets = tweets
+            self.tableView.reloadData()
+        }) { error in
+            print(error)
+        }
+    }
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showTweetDetails" {
+            let tweetDetailsViewController = segue.destination as! TweetDetailsViewController
+            let cell = sender as! TweetCell
+            let indexPath = tableView.indexPath(for: cell)
+            tweetDetailsViewController.tweet = tweets[(indexPath?.row)!]
+        }
     }
 
     @IBAction func logoutTapped(_ sender: UIBarButtonItem) {
@@ -53,5 +62,6 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+
     }
 }

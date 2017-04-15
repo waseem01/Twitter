@@ -173,7 +173,7 @@
                                             <outlet property="timeLabel" destination="DZ7-Ja-SMj" id="yyc-dm-wKC"/>
                                             <outlet property="tweetLabel" destination="ySE-mh-p9s" id="UOc-wd-15w"/>
                                             <outlet property="userImageView" destination="yTK-0d-6aL" id="32m-mi-T3g"/>
-                                            <segue destination="PUw-Ds-pbk" kind="show" id="y1F-XR-buj"/>
+                                            <segue destination="PUw-Ds-pbk" kind="show" identifier="showTweetDetails" id="y1F-XR-buj"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -324,10 +324,10 @@
             </objects>
             <point key="canvasLocation" x="2677.5999999999999" y="142.57871064467767"/>
         </scene>
-        <!--View Controller-->
+        <!--Tweet Details View Controller-->
         <scene sceneID="ZAS-Wk-e3q">
             <objects>
-                <viewController id="PUw-Ds-pbk" sceneMemberID="viewController">
+                <viewController id="PUw-Ds-pbk" customClass="TweetDetailsViewController" customModule="Twitter" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="dZ3-yb-HEf"/>
                         <viewControllerLayoutGuide type="bottom" id="aAK-V5-bFj"/>
@@ -337,7 +337,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="E2h-oG-bki" customClass="TweetContainerView" customModule="Twitter" customModuleProvider="target">
-                                <rect key="frame" x="10" y="30" width="355" height="165"/>
+                                <rect key="frame" x="10" y="74" width="355" height="165"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="165" id="PO8-b1-92x"/>
@@ -351,6 +351,9 @@
                             <constraint firstAttribute="trailing" secondItem="E2h-oG-bki" secondAttribute="trailing" constant="10" id="vhu-SC-cPm"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="tweetContainerView" destination="E2h-oG-bki" id="MO2-2u-uOf"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MnL-aC-u1Y" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
