@@ -99,7 +99,7 @@
                                                     <rect key="frame" x="5" y="5" width="365" height="129.5"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="tweetLabel" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ySE-mh-p9s" userLabel="tweet Label">
-                                                            <rect key="frame" x="82" y="28.5" width="283" height="71"/>
+                                                            <rect key="frame" x="82" y="28.5" width="283" height="76"/>
                                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="11"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
@@ -129,11 +129,11 @@
                                                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LlH-Pe-Us7">
-                                                            <rect key="frame" x="82" y="104.5" width="281" height="20"/>
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LlH-Pe-Us7" customClass="TweetControlBar" customModule="Twitter" customModuleProvider="target">
+                                                            <rect key="frame" x="82" y="109.5" width="281" height="15"/>
                                                             <color key="backgroundColor" red="0.085984490270000005" green="0.79282158719999996" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <constraints>
-                                                                <constraint firstAttribute="height" constant="20" id="zdP-8w-iCq"/>
+                                                                <constraint firstAttribute="height" constant="15" id="zdP-8w-iCq"/>
                                                             </constraints>
                                                         </view>
                                                     </subviews>

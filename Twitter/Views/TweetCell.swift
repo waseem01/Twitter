@@ -31,6 +31,7 @@ class TweetCell: UITableViewCell {
         containerView.layer.shadowOpacity = 0.25
         containerView.layer.shadowRadius = 2
         contentView.backgroundColor = .clear //TODO 
+//        tweetControlView.addSubview(tweetControlBar)
     }
 
     func updateCell(withTweet: Tweet) {
@@ -42,4 +43,12 @@ class TweetCell: UITableViewCell {
         userImageView.layer.cornerRadius = 3
         userImageView.clipsToBounds = true
     }
+
+    //MARK: Properties
+//    private lazy var tweetControlBar: TweetControlBar = {
+//        let view = TweetControlBar(frame: CGRect(x: 0, y: 0, width: self.tweetControlView.frame.size.width, height: 20))
+////        view.translatesAutoresizingMaskIntoConstraints = false
+////        view.center = self.tweetControlView.center
+//        return view
+//    }()
 }
