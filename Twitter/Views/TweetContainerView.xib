@@ -12,8 +12,13 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TweetContainerView" customModule="Twitter" customModuleProvider="target">
             <connections>
                 <outlet property="containerView" destination="tOa-VX-W7l" id="4Ir-C9-30r"/>
+                <outlet property="favoriteButton" destination="EwW-9k-Mv5" id="Egb-nP-xwX"/>
+                <outlet property="favoriteCountLabel" destination="TwF-or-Shb" id="Jkm-23-BgZ"/>
                 <outlet property="handleLabel" destination="egx-EF-FdV" id="1KP-92-eFy"/>
                 <outlet property="nameLabel" destination="GQv-ei-NNL" id="F0Z-bt-Qoz"/>
+                <outlet property="replyButton" destination="Xws-kx-kSz" id="3j3-SX-Zj6"/>
+                <outlet property="retweetButton" destination="ylZ-Rh-Igf" id="GkQ-bV-DfT"/>
+                <outlet property="retweetCountLabel" destination="Kab-hW-hcm" id="8nh-K0-g5a"/>
                 <outlet property="timeLabel" destination="9dl-Yh-HdM" id="EYx-3x-VzV"/>
                 <outlet property="tweetLabel" destination="pm6-1A-G8m" id="bZQ-5s-gGY"/>
                 <outlet property="userImageView" destination="aSS-jd-3tz" id="0aP-aP-cGL"/>
@@ -55,10 +60,65 @@
                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Kwt-CO-IRI" customClass="TweetControlBar" customModule="Twitter" customModuleProvider="target">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Kwt-CO-IRI">
                     <rect key="frame" x="82" y="120" width="445" height="15"/>
-                    <color key="backgroundColor" red="0.085984490270000005" green="0.79282158719999996" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <subviews>
+                        <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xws-kx-kSz">
+                            <rect key="frame" x="0.0" y="2" width="10" height="10"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="10" id="dGg-rv-Tsf"/>
+                                <constraint firstAttribute="width" constant="10" id="lok-0Q-Ygk"/>
+                            </constraints>
+                            <state key="normal" image="reply-icon.png"/>
+                            <connections>
+                                <action selector="replyTapped:" destination="-1" eventType="touchUpInside" id="3H3-mu-udb"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ylZ-Rh-Igf">
+                            <rect key="frame" x="217" y="2" width="10" height="10"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="10" id="NPL-bq-NWa"/>
+                                <constraint firstAttribute="height" constant="10" id="dU5-QS-DUV"/>
+                            </constraints>
+                            <connections>
+                                <action selector="retweetOrFavoriteTapped:" destination="-1" eventType="touchUpInside" id="aL3-B9-h2N"/>
+                            </connections>
+                        </button>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kab-hW-hcm">
+                            <rect key="frame" x="229" y="7" width="0.0" height="0.0"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EwW-9k-Mv5">
+                            <rect key="frame" x="431" y="2" width="10" height="10"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="10" id="1ya-La-00j"/>
+                                <constraint firstAttribute="height" constant="10" id="F97-ey-xlV"/>
+                            </constraints>
+                            <state key="normal" title="Button"/>
+                            <connections>
+                                <action selector="retweetOrFavoriteTapped:" destination="-1" eventType="touchUpInside" id="FP4-33-Zpv"/>
+                            </connections>
+                        </button>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TwF-or-Shb">
+                            <rect key="frame" x="443" y="7.5" width="0.0" height="0.0"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
                     <constraints>
+                        <constraint firstItem="Kab-hW-hcm" firstAttribute="leading" secondItem="ylZ-Rh-Igf" secondAttribute="trailing" constant="2" id="0xr-PG-asf"/>
+                        <constraint firstAttribute="trailing" secondItem="TwF-or-Shb" secondAttribute="trailing" constant="2" id="FJw-xG-DK4"/>
+                        <constraint firstItem="Xws-kx-kSz" firstAttribute="centerY" secondItem="Kwt-CO-IRI" secondAttribute="centerY" id="bWO-lK-XFH"/>
+                        <constraint firstItem="ylZ-Rh-Igf" firstAttribute="centerY" secondItem="Kwt-CO-IRI" secondAttribute="centerY" id="bgA-dY-ddQ"/>
+                        <constraint firstItem="Kab-hW-hcm" firstAttribute="centerY" secondItem="ylZ-Rh-Igf" secondAttribute="centerY" id="dqg-Eb-YVi"/>
+                        <constraint firstItem="ylZ-Rh-Igf" firstAttribute="centerX" secondItem="Kwt-CO-IRI" secondAttribute="centerX" id="lBs-FD-tGa"/>
+                        <constraint firstItem="EwW-9k-Mv5" firstAttribute="centerY" secondItem="Kwt-CO-IRI" secondAttribute="centerY" id="qpw-ne-8fx"/>
+                        <constraint firstItem="TwF-or-Shb" firstAttribute="centerY" secondItem="EwW-9k-Mv5" secondAttribute="centerY" id="qqa-Xo-m4d"/>
+                        <constraint firstItem="Xws-kx-kSz" firstAttribute="leading" secondItem="Kwt-CO-IRI" secondAttribute="leading" id="t1h-ZE-GSJ"/>
+                        <constraint firstItem="TwF-or-Shb" firstAttribute="leading" secondItem="EwW-9k-Mv5" secondAttribute="trailing" constant="2" id="w5x-X4-7a4"/>
                         <constraint firstAttribute="height" constant="15" id="x3A-kO-nTm"/>
                     </constraints>
                 </view>
@@ -89,4 +149,7 @@
             <point key="canvasLocation" x="87.5" y="-342.5"/>
         </view>
     </objects>
+    <resources>
+        <image name="reply-icon.png" width="28" height="20"/>
+    </resources>
 </document>

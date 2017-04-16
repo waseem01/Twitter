@@ -31,9 +31,13 @@ class LoginViewController: UIViewController {
     }
 
     @IBAction func loginTapped(_ sender: UIButton) {
-
+        sender.isHidden = true
         User().getTwitterUser(success: { user in
             self.user = user
+            let initialController = self.storyboard?.instantiateViewController(withIdentifier: "TweetsViewController")
+            let navigationController = UINavigationController.init(rootViewController: initialController!)
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            appDelegate.window!.rootViewController = navigationController
         }) { error in
             print(error)
         }

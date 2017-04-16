@@ -23,38 +23,42 @@ class TwitterClient {
         accessTokenUrl:   "https://api.twitter.com/oauth/access_token"
     )
 
-    func get(url: String, parameters: [String : AnyObject]?, success: @escaping (AnyObject) -> Void, failure: @escaping (Error) -> Void) {
+    func request(method: OAuthSwiftHTTPRequest.Method, parameters: [String : AnyObject], success: @escaping (AnyObject) -> Void, failure: @escaping (Error) -> Void) {
 
-        self.authorizeIfRequired(success: { twitterClient in
-            let params = (parameters?.count)! > 0 ? parameters : [:]
-            let oauthUrl = self.apiBaseUrl + url
-            let _ = self.oauthswift.client.get(oauthUrl, parameters: params!,
-                                               success: { response in
-                                                let jsonDict = try? response.jsonObject()
-                                                success(jsonDict as AnyObject)
-            },
-                                               failure: { error in
-                                                failure(error)
+        let url = parameters["url"] as! String
+
+        switch method {
+        case .GET:
+            self.authorizeIfRequired(success: { twitterClient in
+                var params = (parameters.count) > 1 ? parameters : [:]
+                let oauthUrl = self.apiBaseUrl + url
+                params.removeValue(forKey: "url")
+                let _ = self.oauthswift.client.get(oauthUrl, parameters: params,
+                                                   success: { response in
+                                                    let jsonDict = try? response.jsonObject()
+                                                    success(jsonDict as AnyObject)
+                },
+                                                   failure: { error in
+                                                    failure(error)
+                })
+            }, failure: { error in
+                failure(error)
             })
-        }, failure: { error in
-            failure(error)
-        })
+        case .POST:
+            var params = (parameters.count) > 0 ? parameters : [:]
+            let oauthUrl = self.apiBaseUrl + url
+            params.removeValue(forKey: "url")
+            let _ = self.oauthswift.client.post(oauthUrl, parameters: params,
+                                                success: { response in
+                                                    let jsonDict = try? response.jsonObject()
+                                                    success(jsonDict as AnyObject)
+            },
+                                                failure: { error in
+                                                    failure(error)
+            })
+        default: break
+        }
     }
-
-    func post(url: String, parameters: [String : AnyObject]?, success: @escaping (AnyObject) -> Void, failure: @escaping (Error) -> Void) {
-
-        let params = (parameters?.count)! > 0 ? parameters : [:]
-        let oauthUrl = self.apiBaseUrl + url
-        let _ = self.oauthswift.client.post(oauthUrl, parameters: params!,
-                                           success: { response in
-                                            let jsonDict = try? response.jsonObject()
-                                            success(jsonDict as AnyObject)
-        },
-                                           failure: { error in
-                                            failure(error)
-        })
-    }
-
 
     //MARK: - Private Methods
     private func authorizeIfRequired(success: @escaping (TwitterClient) -> Void, failure: @escaping (Error) -> Void) {

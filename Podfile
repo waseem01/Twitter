@@ -6,7 +6,6 @@ target 'Twitter' do
   use_frameworks!
 
   # Pods for Twitter
-  pod 'Unbox'
   pod 'AFNetworking'
   pod 'OAuthSwift'
 

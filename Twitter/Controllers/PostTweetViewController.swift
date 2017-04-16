@@ -17,9 +17,10 @@ class PostTweetViewController: UIViewController, UITextViewDelegate {
     @IBOutlet weak var tweetButton: UIButton!
     @IBOutlet weak var userNameLabel: UILabel!
     @IBOutlet weak var userHandle: UILabel!
+    var newTweet: Tweet!
 
     var placeholder : UILabel!
-    var replyTweetHandle: String?
+    var tweet: Tweet?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,16 +32,37 @@ class PostTweetViewController: UIViewController, UITextViewDelegate {
         userImageView.setImageWith((User.currentUser?.profileImageUrl)!)
         userNameLabel.text = User.currentUser?.name
         userHandle.text = String(format: "@%@", (User.currentUser?.screeName)!)
-        if replyTweetHandle != nil {
-            tweetTextView.text = replyTweetHandle! + " "
+        if let handle = tweet?.handle {
+            tweetTextView.text = handle + " "
             updateTweetView(tweetTextView)
         }
         tweetTextView.becomeFirstResponder()
     }
 
-    @IBAction func postTweetTapped(_ sender: UIButton) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let tweetsViewController = segue.destination as! TweetsViewController
+        tweetsViewController.newTweet = newTweet
     }
 
+    @IBAction func postTweetTapped(_ sender: UIButton) {
+
+        var parameters = [String : AnyObject]()
+
+        if let replyTweet = tweet {
+            parameters["in_reply_to_status_id"] = replyTweet.tweet_id as AnyObject
+        }
+        parameters["status"] = tweetTextView.text as AnyObject
+        Tweet().request(method: .post, parameters: parameters, success: { response in
+            self.dismiss(animated: true, completion: nil)
+            self.newTweet = response.first!
+            self.performSegue(withIdentifier: "unwindToTweets", sender: self)
+            print(response)
+        }) { error in
+            print(error)
+        }
+    }
+
+    // MARK: - Private Methods
     private func setupPlaceholder() {
         placeholder = UILabel()
         placeholder.text = "What's happening?"

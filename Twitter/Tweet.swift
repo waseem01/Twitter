@@ -9,6 +9,16 @@
 import UIKit
 import OAuthSwift
 
+enum TweetAction {
+    case loadTweets
+    case loadMoreTweets
+    case post
+    case retweet
+    case unretweet
+    case favorite
+    case unfavorite
+}
+
 class Tweet: NSObject {
 
     var name: String?
@@ -24,15 +34,17 @@ class Tweet: NSObject {
     var favoriteCount: Int?
     var retweeterScreenName: String?
     var userScreenName: String?
+    var count = 0
+    var tweet_id: String?
 
     init(dictionary: NSDictionary) {
         text = dictionary["text"] as? String
-        retweeted = dictionary["retweeted"] as? Int != 0
-        favorited = dictionary["favorited"] as? Int != 0
+        retweeted = (dictionary["retweeted"] as? Bool) ?? false
+        favorited = (dictionary["favorited"] as? Bool) ?? false
         retweetCount = dictionary["retweet_count"] as? Int
-        favoriteCount = dictionary["favorite_count"] as? Int
-        userScreenName = dictionary.value(forKeyPath: "user.screen_name") as? String
         
+        userScreenName = dictionary.value(forKeyPath: "user.screen_name") as? String
+
         if dictionary["user"] != nil {
             let userDictionary = dictionary["user"]! as! NSDictionary
             let url = userDictionary["profile_image_url_https"]!
@@ -58,16 +70,14 @@ class Tweet: NSObject {
             }
         }
 
-//        if let retweetedStatus = dictionary["retweeted_status"] as? NSDictionary {
-//            var retweetedTweet = TweetState.Entity(dictionary: retweetedStatus)
-//            let retweeterScreenName = userScreenName
-
-//            retweetedTweet.retweeted = retweetedTweet.retweeted || retweeted
-//            retweetedTweet.favorited = retweetedTweet.favorited || favorited
-
-//            self = retweetedTweet
-//            self.retweeterScreenName = retweeterScreenName
-//        }
+        if let retweetedStatus = dictionary["retweeted_status"] as? [String: AnyObject], !retweetedStatus.isEmpty {
+            tweet_id = retweetedStatus["id_str"] as? String
+            favoriteCount = dictionary.value(forKeyPath: "retweeted_status.favorite_count") as? Int
+            retweeterScreenName = userScreenName
+        } else {
+            tweet_id = dictionary["id_str"] as? String
+            favoriteCount = dictionary["favorite_count"]as? Int
+        }
     }
 
     convenience override init() {
@@ -76,24 +86,65 @@ class Tweet: NSObject {
 
     class func tweetsArray(array: [NSDictionary]) -> [Tweet] {
         var tweets = [Tweet]()
-
         for dictionary in array {
             tweets.append(Tweet(dictionary: dictionary))
         }
         return tweets
     }
 
-    func getTweets(success: @escaping ([Tweet]) -> Void, failure: @escaping (Error) -> Void) {
-        let user_id = User.currentUser?.user_id  as AnyObject
-        TwitterClient.sharedInstance.get(url: "/1.1/statuses/home_timeline.json", parameters: ["user_id": user_id], success: { jsonDict in
-            let tweets = Tweet.tweetsArray(array: jsonDict as! [NSDictionary])
-            success(tweets)
+    func request(method: TweetAction, parameters: [String: AnyObject]?, success: @escaping ([Tweet]) -> Void, failure: @escaping (Error) -> Void) {
+
+        var params = [String : AnyObject]()
+        var requestMethod : OAuthSwiftHTTPRequest.Method?
+
+        if let paramsRecieved = parameters {
+            for (key, value) in paramsRecieved {
+                params.updateValue(value, forKey: key)
+            }
+        }
+
+        switch method {
+
+        case .loadTweets:
+            requestMethod = .GET
+            params["url"] = "/1.1/statuses/home_timeline.json" as AnyObject
+        case .loadMoreTweets:
+            count += 20
+            requestMethod = .GET
+            params["url"] = "/1.1/statuses/home_timeline.json" as AnyObject
+            params["count"] = count  as AnyObject
+        case .post:
+            requestMethod = .POST
+            params["url"] = "/1.1/statuses/update.json" as AnyObject
+        case .retweet:
+            let id = parameters?["tweet_id"] as! String
+            requestMethod = .POST
+            params["url"] = "/1.1/statuses/retweet/\(id).json" as AnyObject
+        case .unretweet:
+            let id = parameters?["tweet_id"] as! String
+            requestMethod = .POST
+            params["url"] = "/1.1/statuses/unretweet/\(id).json" as AnyObject
+        case .favorite:
+            requestMethod = .POST
+            let id = parameters?["tweet_id"] as! String
+            params["url"] = "/1.1/favorites/create.json?id=\(id)" as AnyObject
+        case .unfavorite:
+            requestMethod = .POST
+            let id = parameters?["tweet_id"] as! String
+            params["url"] = "/1.1/favorites/destroy.json?id=\(id)" as AnyObject
+        }
+
+        TwitterClient.sharedInstance.request(method: requestMethod!, parameters: params, success: { jsonDict in
+            switch method {
+            case .loadTweets, .loadMoreTweets:
+                let tweets = Tweet.tweetsArray(array: jsonDict as! [NSDictionary])
+                success(tweets)
+            case .post, .retweet, .unretweet, .favorite, .unfavorite:
+                let tweets = Tweet.tweetsArray(array: [jsonDict as! NSDictionary])
+                success(tweets)
+            }
         }, failure: { error in
             failure(error)
         })
-    }
-
-    func hours(from date: Date) -> Int {
-        return Calendar.current.dateComponents([.hour], from: date, to: Date()).hour ?? 0
     }
 }

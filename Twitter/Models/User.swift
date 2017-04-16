@@ -9,6 +9,11 @@
 import UIKit
 import OAuthSwift
 
+enum UserAction {
+    case login
+    case logout
+}
+
 var _currentUser: User?
 
 class User: NSObject {
@@ -19,14 +24,16 @@ class User: NSObject {
     var profileImageUrl: URL?
     var tagLine: String?
     var dictionary: NSDictionary?
+    var parameters = [String : AnyObject]()
 
     init(dictionary: NSDictionary) {
         self.dictionary = dictionary
         name = dictionary["name"] as? String
         user_id = dictionary["id"] as? Int
         screeName = dictionary["screen_name"] as? String
-        let url = dictionary["profile_image_url_https"]!
-        profileImageUrl = URL(string: (url as? String)!)
+        if let url = dictionary["profile_image_url_https"] {
+            profileImageUrl = URL(string: (url as? String)!)
+        }
         tagLine = dictionary["description"] as? String
     }
 
@@ -60,7 +67,8 @@ class User: NSObject {
     }
 
     func getTwitterUser(success: @escaping (User) -> Void, failure: @escaping (Error) -> Void) {
-        TwitterClient.sharedInstance.get(url: "/1.1/account/verify_credentials.json", parameters: [:], success: { jsonDict in
+        parameters["url"] = "/1.1/account/verify_credentials.json" as AnyObject
+        TwitterClient.sharedInstance.request(method: .GET, parameters: parameters, success: { jsonDict in
             let user = User(dictionary: jsonDict as! NSDictionary)
             User.currentUser = user
             success(user)
@@ -70,18 +78,19 @@ class User: NSObject {
     }
 
     func logout(success: @escaping (AnyObject) -> Void, failure: @escaping (Error) -> Void) {
-        let access_token = UserDefaults.standard.string(forKey: "twitter:oauthToken") as AnyObject
-        TwitterClient.sharedInstance.post(url: "/oauth2/invalidate_token", parameters: ["access_token" : access_token], success: { jsonDict in
-            success(jsonDict)
-            _currentUser = nil
-            UserDefaults.standard.removePersistentDomain(forName: Bundle.main.bundleIdentifier!)
-            UserDefaults.standard.synchronize()
+        parameters["url"] = "/oauth2/invalidate_token" as AnyObject
+        parameters["access_token"] = UserDefaults.standard.string(forKey: "twitter:oauthToken") as AnyObject
 
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let appDelegate = UIApplication.shared.delegate as! AppDelegate
-            appDelegate.window!.rootViewController = storyboard.instantiateInitialViewController()!
+        TwitterClient.sharedInstance.request(method: .POST, parameters: parameters, success: { jsonDict in
+            success(jsonDict)
         }, failure: { error in
             failure(error)
         })
+        _currentUser = nil
+        UserDefaults.standard.removePersistentDomain(forName: Bundle.main.bundleIdentifier!)
+        UserDefaults.standard.synchronize()
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        appDelegate.window!.rootViewController = storyboard.instantiateInitialViewController()!
     }
 }

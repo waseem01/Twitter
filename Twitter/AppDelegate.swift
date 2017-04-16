@@ -10,20 +10,39 @@ import UIKit
 import OAuthSwift
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, CAAnimationDelegate {
 
     var window: UIWindow?
     var storyboard = UIStoryboard(name: "Main", bundle: nil)
+    var mask: CALayer?
+    var imageView: UIImageView?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
 
-        if User.currentUser != nil {
-            let initialController = storyboard.instantiateViewController(withIdentifier: "TweetsViewController") as UIViewController
-            let navigationController = UINavigationController.init(rootViewController: initialController)
-            window?.rootViewController = navigationController
-        } else {
-            window?.rootViewController = storyboard.instantiateInitialViewController()!
-        }
+
+        self.window = UIWindow(frame: UIScreen.main.bounds)
+
+        let imageView = UIImageView(frame: self.window!.frame)
+        imageView.image = UIImage(named: "masklogo")
+        self.window!.addSubview(imageView)
+        self.mask = CALayer()
+        self.mask!.contents = UIImage(named: "Twitter-512")!.cgImage
+        self.mask!.contentsGravity = kCAGravityResizeAspect
+        self.mask!.bounds = CGRect(x: 0, y: 0, width: 100, height: 100)
+        self.mask!.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+        self.mask!.position = CGPoint(x: imageView.frame.size.width/2, y: imageView.frame.size.height/2)
+
+        let emptyView = UIViewController()
+        self.window?.rootViewController = emptyView
+
+        imageView.layer.mask = mask
+        self.imageView = imageView
+
+        animateMask()
+
+        self.window!.backgroundColor = UIColor(red: 70/255, green: 154/255, blue: 233/255, alpha: 1)
+        self.window!.makeKeyAndVisible()
+        UIApplication.shared.isStatusBarHidden = true
 
         return true
     }
@@ -55,6 +74,33 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             OAuthSwift.handle(url: url)
         }
         return true
+    }
+
+    func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
+        self.imageView!.layer.mask?.removeFromSuperlayer()
+        self.imageView?.removeFromSuperview()
+        self.mask?.removeFromSuperlayer()
+        if User.currentUser != nil {
+            let initialController = storyboard.instantiateViewController(withIdentifier: "TweetsViewController") as UIViewController
+            let navigationController = UINavigationController.init(rootViewController: initialController)
+            window?.rootViewController = navigationController
+        } else {
+            window?.rootViewController = storyboard.instantiateInitialViewController()!
+        }
+    }
+
+    func animateMask() {
+        let keyFrameAnimation = CAKeyframeAnimation(keyPath: "bounds")
+        keyFrameAnimation.delegate = self
+        keyFrameAnimation.duration = 1
+        keyFrameAnimation.beginTime = CACurrentMediaTime() + 1 //add delay of 1 second
+        let initalBounds = NSValue(cgRect: mask!.bounds)
+        let secondBounds = NSValue(cgRect: CGRect(x: 0, y: 0, width: 90, height: 90))
+        let finalBounds = NSValue(cgRect: CGRect(x: 0, y: 0, width: 1500, height: 1500))
+        keyFrameAnimation.values = [initalBounds, secondBounds, finalBounds]
+        keyFrameAnimation.keyTimes = [0, 0.3, 1]
+        keyFrameAnimation.timingFunctions = [CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut), CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseOut)]
+        self.mask!.add(keyFrameAnimation, forKey: "bounds")
     }
 }
 

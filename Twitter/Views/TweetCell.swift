@@ -9,8 +9,9 @@
 import UIKit
 import AFNetworking
 
-protocol TweetCellDelegate {
+protocol TweetCellDelegate: NSObjectProtocol {
     func tweetCell(replyToTweetInCell cell: TweetCell)
+    func tweetCell(retweetedOrFavoritedInCell cell: TweetCell)
 }
 
 class TweetCell: UITableViewCell {
@@ -27,10 +28,12 @@ class TweetCell: UITableViewCell {
     @IBOutlet weak var replyButton: UIButton!
     @IBOutlet weak var retweetButton: UIButton!
     @IBOutlet weak var favoriteButton: UIButton!
+    @IBOutlet weak var retweetedLabel: UILabel!
+    @IBOutlet weak var retweetedView: UIView!
 
-    var delegate: TweetCellDelegate?
+    weak var delegate: TweetCellDelegate?
 
-    var tweet = Tweet() {
+    var tweet: Tweet! {
         didSet {
             updateCell(withTweet: tweet)
         }
@@ -43,10 +46,10 @@ class TweetCell: UITableViewCell {
         containerView.layer.shadowOpacity = 0.25
         containerView.layer.shadowRadius = 2
         contentView.backgroundColor = .clear
-        styleButtons()
     }
 
-    func updateCell(withTweet: Tweet) {
+    // MARK: - Private Methods
+    private func updateCell(withTweet: Tweet) {
         nameLabel.text = tweet.name
         handleLabel.text = tweet.handle
         timeLabel.text = tweet.time
@@ -54,28 +57,27 @@ class TweetCell: UITableViewCell {
         userImageView.setImageWith(tweet.profileImageUrl!)
         userImageView.layer.cornerRadius = 3
         userImageView.clipsToBounds = true
-        
+
         if tweet.retweetCount! > 0 {
             retweetCountLabel.text = String(tweet.retweetCount!)
         }
+
         if tweet.favoriteCount! > 0 {
             favoriteCountLabel.text = String(tweet.favoriteCount!)
         }
+
+        if tweet.retweeterScreenName != nil {
+            retweetedView.isHidden = false
+            retweetedLabel.text = tweet.retweeterScreenName
+        } else {
+            retweetedView.isHidden = true
+        }
+        styleButtons()
     }
 
     private func styleButtons() {
-
-        [(String, UIButton!)](
-            [
-                ("reply-icon", replyButton),
-                ("retweet-icon", retweetButton),
-                ("star-icon", favoriteButton)
-            ]
-            ).forEach { (imageName, button) -> () in
-                let origImage = UIImage(named: imageName);
-                let tintedImage = origImage?.withRenderingMode(UIImageRenderingMode.alwaysTemplate)
-                button.setImage(tintedImage, for: .normal)
-                button.tintColor = .lightGray
+        [ replyButton, retweetButton, favoriteButton].forEach { button -> () in
+            self.updateButtonState(button!)
         }
     }
 
@@ -83,19 +85,46 @@ class TweetCell: UITableViewCell {
         delegate?.tweetCell(replyToTweetInCell: self)
     }
 
-    @IBAction func retweetTapped(_ sender: UIButton) {
+    @IBAction func retweetOrFavoriteTapped(_ sender: UIButton) {
+        var method = TweetAction.post
+        let tweet_id = tweet.tweet_id
+        if sender.tag == 2 {
+            method = (tweet.retweeted ? .unretweet : .retweet)
+        } else if sender.tag == 3 {
+            method = (tweet.favorited ? .unfavorite : .favorite)
+        }
+        Tweet().request(method: method,
+                        parameters: ["tweet_id" : tweet_id as AnyObject],
+                        success: { response in
+                            self.tweet = response.first!
+                            self.delegate?.tweetCell(retweetedOrFavoritedInCell: self)
+        }) { error in
+            print(error)
+        }
     }
 
-    @IBAction func favoriteTapped(_ sender: UIButton) {
+    private func updateButtonState(_ button: UIButton) {
+
+        var orginalImage = UIImage()
+        var tintedImage = UIImage()
+        var color = UIColor()
+
+        switch button.tag {
+        case 1:
+            orginalImage = UIImage(named: "reply-icon")!;
+            tintedImage = orginalImage.withRenderingMode(UIImageRenderingMode.alwaysTemplate)
+            color = .gray
+        case 2:
+            orginalImage = UIImage(named: "retweet-icon")!;
+            tintedImage = orginalImage.withRenderingMode(UIImageRenderingMode.alwaysTemplate)
+            color = tweet.retweeted ? Colors.twitterGreen : .gray
+        case 3:
+            orginalImage = UIImage(named: "star-icon")!;
+            tintedImage = orginalImage.withRenderingMode(UIImageRenderingMode.alwaysTemplate)
+            color = tweet.favorited ? .red : .gray
+        default: break
+        }
+        button.setImage(tintedImage, for: .normal)
+        button.tintColor = color
     }
-    
-
-
-    //MARK: Properties
-//    private lazy var tweetControlBar: TweetControlBar = {
-//        let view = TweetControlBar(frame: CGRect(x: 0, y: 0, width: self.tweetControlView.frame.size.width, height: 20))
-////        view.translatesAutoresizingMaskIntoConstraints = false
-////        view.center = self.tweetControlView.center
-//        return view
-//    }()
 }
