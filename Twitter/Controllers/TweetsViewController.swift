@@ -12,7 +12,7 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
 
     var tweets = [Tweet]()
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var logoutButton: UIBarButtonItem!
+    @IBOutlet weak var hamburgerButton: UIBarButtonItem!
     @IBOutlet weak var twitterLogo: UIImageView!
     @IBOutlet weak var tweetButton: UIBarButtonItem!
     let pullToRefreshControl = UIRefreshControl()
@@ -27,7 +27,7 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
 
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 120
-        logoutButton.tintColor = Colors.twitterBlue
+        hamburgerButton.tintColor = Colors.twitterBlue
         tweetButton.tintColor = Colors.twitterBlue
         let image = UIImage(named: "tweet")?.withRenderingMode(.alwaysTemplate)
         twitterLogo.contentMode = .scaleAspectFit
@@ -56,6 +56,9 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
             let indexPath = tableView.indexPath(for: cell)
             let tweet = tweets[(indexPath?.row)!]
             postTweetViewController.tweet = tweet
+        } else if (segue.identifier == "showProfile") {
+            let destinationViewController = segue.destination as! ProfileViewController
+            destinationViewController.user = sender as! User
         }
     }
 
@@ -86,12 +89,8 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         }
     }
 
-    @IBAction func logoutTapped(_ sender: UIBarButtonItem) {
-        User().logout(success: { (success) in
-            print(success)
-        }) { (error) in
-            print(error)
-        }
+    @IBAction func hamburgerButtonTapped(_ sender: UIBarButtonItem) {
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "HamburgerTapped"), object: nil)
     }
 
     // MARK: - TweetCellDelegate
@@ -103,6 +102,10 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         let indexPath = tableView.indexPath(for: cell)
         tweets[(indexPath?.row)!] = cell.tweet
         tableView.reloadRows(at: [indexPath!], with: .automatic)
+    }
+
+    func userProfileTapped(_ user: User) {
+        performSegue(withIdentifier: "showProfile", sender: user)
     }
 
     @IBAction func unwindToTweetsViewController(segue: UIStoryboardSegue) {

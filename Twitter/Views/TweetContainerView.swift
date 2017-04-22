@@ -92,15 +92,15 @@ class TweetContainerView: UIView {
         var color = UIColor.white
 
         switch button.tag {
-        case 1:
+        case 10:
             orginalImage = UIImage(named: "reply-icon")!;
             tintedImage = orginalImage.withRenderingMode(UIImageRenderingMode.alwaysTemplate)
             color = .gray
-        case 2:
+        case 11:
             orginalImage = UIImage(named: "retweet-icon")!;
             tintedImage = orginalImage.withRenderingMode(UIImageRenderingMode.alwaysTemplate)
             color = tweet.retweeted ? Colors.twitterGreen : .gray
-        case 3:
+        case 12:
             orginalImage = UIImage(named: "star-icon")!;
             tintedImage = orginalImage.withRenderingMode(UIImageRenderingMode.alwaysTemplate)
             color = tweet.favorited ? .red : .gray
@@ -118,9 +118,9 @@ class TweetContainerView: UIView {
     @IBAction func retweetOrFavoriteTapped(_ sender: UIButton) {
         var method = TweetAction.post
         let tweet_id = tweet.tweet_id
-        if sender.tag == 2 {
+        if sender.tag == 11 {
             method = (tweet.retweeted ? .unretweet : .retweet)
-        } else if sender.tag == 3 {
+        } else if sender.tag == 12 {
             method = (tweet.favorited ? .unfavorite : .favorite)
         }
         Tweet().request(method: method,

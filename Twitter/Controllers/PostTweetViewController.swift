@@ -31,7 +31,7 @@ class PostTweetViewController: UIViewController, UITextViewDelegate {
         tweetButton.backgroundColor = Colors.twitterBlue
         userImageView.setImageWith((User.currentUser?.profileImageUrl)!)
         userNameLabel.text = User.currentUser?.name
-        userHandle.text = String(format: "@%@", (User.currentUser?.screeName)!)
+        userHandle.text = User.currentUser?.handle
         if let handle = tweet?.handle {
             tweetTextView.text = handle + " "
             updateTweetView(tweetTextView)

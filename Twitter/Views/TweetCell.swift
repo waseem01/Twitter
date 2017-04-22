@@ -12,6 +12,7 @@ import AFNetworking
 protocol TweetCellDelegate: NSObjectProtocol {
     func tweetCell(replyToTweetInCell cell: TweetCell)
     func tweetCell(retweetedOrFavoritedInCell cell: TweetCell)
+    func userProfileTapped(_ user: User)
 }
 
 class TweetCell: UITableViewCell {
@@ -46,32 +47,32 @@ class TweetCell: UITableViewCell {
         containerView.layer.shadowOpacity = 0.25
         containerView.layer.shadowRadius = 2
         contentView.backgroundColor = .clear
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(userProfileTapped))
+        userImageView.addGestureRecognizer(tapGesture)
     }
 
     // MARK: - Private Methods
     private func updateCell(withTweet: Tweet) {
-        nameLabel.text = tweet.name
-        handleLabel.text = tweet.handle
-        timeLabel.text = tweet.time
-        tweetLabel.text = tweet.text
-        userImageView.setImageWith(tweet.profileImageUrl!)
-        userImageView.layer.cornerRadius = 3
-        userImageView.clipsToBounds = true
 
-        if tweet.retweetCount! > 0 {
-            retweetCountLabel.text = String(tweet.retweetCount!)
-        }
-
-        if tweet.favoriteCount! > 0 {
-            favoriteCountLabel.text = String(tweet.favoriteCount!)
-        }
-
-        if tweet.retweeterScreenName != nil {
+        if tweet.retweeted && tweet.user != nil {
+            nameLabel.text = tweet.user?.name
+            handleLabel.text = tweet.user?.handle
+            userImageView.setImageWith((tweet.user?.profileImageUrl)!)
             retweetedView.isHidden = false
-            retweetedLabel.text = tweet.retweeterScreenName
+            retweetedLabel.text = tweet.retweeterHandle
         } else {
+            nameLabel.text = tweet.name
+            handleLabel.text = tweet.handle
+            userImageView.setImageWith(tweet.profileImageUrl!)
             retweetedView.isHidden = true
         }
+        timeLabel.text = tweet.time
+        tweetLabel.text = tweet.text
+        userImageView.layer.cornerRadius = 3
+        userImageView.clipsToBounds = true
+        retweetCountLabel.text = String(tweet.retweetCount!)
+        favoriteCountLabel.text = String(tweet.favoriteCount!)
+
         styleButtons()
     }
 
@@ -88,19 +89,31 @@ class TweetCell: UITableViewCell {
     @IBAction func retweetOrFavoriteTapped(_ sender: UIButton) {
         var method = TweetAction.post
         let tweet_id = tweet.tweet_id
-        if sender.tag == 2 {
+        if sender.tag == 11 {
             method = (tweet.retweeted ? .unretweet : .retweet)
-        } else if sender.tag == 3 {
+        } else if sender.tag == 12 {
             method = (tweet.favorited ? .unfavorite : .favorite)
         }
         Tweet().request(method: method,
                         parameters: ["tweet_id" : tweet_id as AnyObject],
                         success: { response in
-                            self.tweet = response.first!
+                            if method == .unretweet {
+                                let tweet = response.first!
+                                tweet.retweeted = false
+                                tweet.retweetCount = tweet.retweetCount! - 1
+                                self.tweet = tweet
+                            } else {
+                                self.tweet = response.first!
+                            }
+
                             self.delegate?.tweetCell(retweetedOrFavoritedInCell: self)
         }) { error in
             print(error)
         }
+    }
+
+    @objc private func userProfileTapped() {
+        delegate?.userProfileTapped(tweet.user!)
     }
 
     private func updateButtonState(_ button: UIButton) {
@@ -110,15 +123,15 @@ class TweetCell: UITableViewCell {
         var color = UIColor()
 
         switch button.tag {
-        case 1:
+        case 10:
             orginalImage = UIImage(named: "reply-icon")!;
             tintedImage = orginalImage.withRenderingMode(UIImageRenderingMode.alwaysTemplate)
             color = .gray
-        case 2:
+        case 11:
             orginalImage = UIImage(named: "retweet-icon")!;
             tintedImage = orginalImage.withRenderingMode(UIImageRenderingMode.alwaysTemplate)
             color = tweet.retweeted ? Colors.twitterGreen : .gray
-        case 3:
+        case 12:
             orginalImage = UIImage(named: "star-icon")!;
             tintedImage = orginalImage.withRenderingMode(UIImageRenderingMode.alwaysTemplate)
             color = tweet.favorited ? .red : .gray

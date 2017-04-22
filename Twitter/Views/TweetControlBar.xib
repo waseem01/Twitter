@@ -24,7 +24,7 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="15"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fQq-Hr-BN8">
+                <button opaque="NO" tag="10" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fQq-Hr-BN8">
                     <rect key="frame" x="0.0" y="2.5" width="10" height="10"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="10" id="SJR-dZ-d2j"/>
@@ -36,7 +36,7 @@
                         <action selector="replyTapped:" destination="-1" eventType="touchUpInside" id="2fK-BA-3Jl"/>
                     </connections>
                 </button>
-                <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="35Y-Tc-bVf">
+                <button opaque="NO" tag="11" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="35Y-Tc-bVf">
                     <rect key="frame" x="182" y="2" width="10" height="10"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="10" id="1R4-hu-eNu"/>
@@ -53,7 +53,7 @@
                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JhX-4r-kTY">
+                <button opaque="NO" tag="12" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JhX-4r-kTY">
                     <rect key="frame" x="334" y="2.5" width="10" height="10"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="10" id="I6W-c7-syW"/>

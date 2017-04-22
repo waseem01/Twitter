@@ -8,41 +8,59 @@
 
 import UIKit
 
-class TweetDetailsViewController: UIViewController, TweetViewDelegate {
+class TweetDetailsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, TweetCellDelegate {
 
     var tweet = Tweet()
-    @IBOutlet weak var tweetContainerView: TweetContainerView!
+    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var tweetButton: UIBarButtonItem!
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        tweetContainerView.tweet = tweet
-        tweetContainerView.delegate = self
-    }
-
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        if self.presentedViewController == nil {
-            self.performSegue(withIdentifier: "unwindToResults", sender: self)
-        }
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.estimatedRowHeight = 120
+        navigationController?.navigationBar.topItem?.title = ""
+        tweetButton.tintColor = Colors.twitterBlue
+        tableView.reloadData()
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "postTweetFromDetails" {
+        if segue.identifier == "postTweet" {
             let postTweetViewController = segue.destination as! PostTweetViewController
-            let tweet = sender as! Tweet
             postTweetViewController.tweet = tweet
-        } else {
-            let tweetsViewController = segue.destination as! TweetsViewController
-            tweetsViewController.newTweet = tweet
         }
+//        else {
+//            let tweetsViewController = segue.destination as! TweetsViewController
+//            tweetsViewController.newTweet = tweet
+//        }
     }
 
-    func tweetView(replyToTweetInView tweet: Tweet) {
-        performSegue(withIdentifier: "postTweetFromDetails", sender: tweet)
+    // MARK: - TweetCellDelegate
+    func tweetCell(replyToTweetInCell cell: TweetCell) {
+        performSegue(withIdentifier: "postTweet", sender: cell)
     }
 
-    func tweetView(retweetedOrFavoritedInView tweet: Tweet) {
-        self.tweet = tweet
+    func tweetCell(retweetedOrFavoritedInCell cell: TweetCell) {
+        let indexPath = tableView.indexPath(for: cell)
+        tweet = cell.tweet
+        tableView.reloadRows(at: [indexPath!], with: .automatic)
+    }
+
+    func userProfileTapped(_ user: User) {
+        performSegue(withIdentifier: "showProfile", sender: user)
+    }
+
+    // MARK: - UITableViewDelegate
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "TweetCell") as! TweetCell
+        cell.tweet = tweet
+        cell.delegate = self
+        return cell
     }
 
 }

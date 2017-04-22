@@ -20,20 +20,30 @@ class User: NSObject {
 
     var name: String?
     var user_id: Int?
-    var screeName: String?
+    var handle: String?
     var profileImageUrl: URL?
+    var profileHeaderUrl: URL?
     var tagLine: String?
     var dictionary: NSDictionary?
     var parameters = [String : AnyObject]()
+    var followersCount: Int = 0
+    var followingCount: Int = 0
 
     init(dictionary: NSDictionary) {
         self.dictionary = dictionary
         name = dictionary["name"] as? String
         user_id = dictionary["id"] as? Int
-        screeName = dictionary["screen_name"] as? String
+        if let name = dictionary["screen_name"] as? String {
+            handle = String(format: "@%@", name)
+        }
         if let url = dictionary["profile_image_url_https"] {
             profileImageUrl = URL(string: (url as? String)!)
         }
+        if let url = dictionary["profile_background_image_url_https"] {
+            profileHeaderUrl = URL(string: (url as? String)!)
+        }
+        followersCount = (dictionary["followers_count"] as? Int) ?? 0
+        followingCount = (dictionary["following"] as? Int) ?? 0
         tagLine = dictionary["description"] as? String
     }
 
