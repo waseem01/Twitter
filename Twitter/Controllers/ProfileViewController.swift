@@ -22,6 +22,9 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     @IBOutlet weak var twitterLogo: UIImageView!
     @IBOutlet weak var tweetButton: UIBarButtonItem!
 
+    @IBOutlet weak var descriptionLabel: UILabel!
+    @IBOutlet weak var pageControl: UIPageControl!
+
     var user: User!
     var tweets = [Tweet]()
 
@@ -36,7 +39,10 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 300
         user = user ?? User.currentUser
-        userInfoView.backgroundColor = Colors.twitterBlue
+        userInfoView.layer.shadowOffset = CGSize(width: 0, height: 1)
+        userInfoView.layer.shadowOpacity = 0.25
+        userInfoView.layer.shadowRadius = 2
+        userInfoView.backgroundColor = .clear
         profileHeaderImageView.setImageWith(user.profileHeaderUrl!)
         profileImageView.setImageWith(user.profileImageUrl!)
         userNameLabel.text = user?.name
@@ -80,6 +86,23 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
 
     @IBAction func hamburgerButtonTapped(_ sender: UIBarButtonItem) {
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "HamburgerTapped"), object: nil)
+    }
+
+    @IBAction func pageControlTapped(_ sender: UIPageControl) {
+        
+        UIView.transition(with: userInfoView,
+                          duration: 0.75,
+                          options: [.transitionCrossDissolve],
+                          animations: {
+                            self.profileHeaderImageView.alpha = self.descriptionLabel.isHidden ? 0.35 : 1
+                            self.userNameLabel.isHidden = self.descriptionLabel.isHidden
+                            self.userHandleLabel.isHidden = self.descriptionLabel.isHidden
+                            self.descriptionLabel.isHidden = self.descriptionLabel.isHidden
+                            self.followersLabel.isHidden = self.descriptionLabel.isHidden
+                            self.followingLabel.isHidden = self.descriptionLabel.isHidden
+                            self.profileImageView.isHidden = self.descriptionLabel.isHidden
+                            self.descriptionLabel.isHidden = !self.descriptionLabel.isHidden
+        }, completion: nil)
     }
 
     // MARK: - UITableViewDelegate
