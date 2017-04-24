@@ -82,7 +82,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CAAnimationDelegate {
         self.mask?.removeFromSuperlayer()
         if User.currentUser != nil {
             let initialController = storyboard.instantiateViewController(withIdentifier: "HamburgerMenuView") as UIViewController
-//            let navigationController = UINavigationController.init(rootViewController: initialController)
             window?.rootViewController = initialController
         } else {
             window?.rootViewController = storyboard.instantiateInitialViewController()!

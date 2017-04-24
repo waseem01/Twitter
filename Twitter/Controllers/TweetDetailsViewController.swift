@@ -30,10 +30,6 @@ class TweetDetailsViewController: UIViewController, UITableViewDelegate, UITable
             let postTweetViewController = segue.destination as! PostTweetViewController
             postTweetViewController.tweet = tweet
         }
-//        else {
-//            let tweetsViewController = segue.destination as! TweetsViewController
-//            tweetsViewController.newTweet = tweet
-//        }
     }
 
     // MARK: - TweetCellDelegate

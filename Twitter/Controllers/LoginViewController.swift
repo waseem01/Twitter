@@ -35,7 +35,6 @@ class LoginViewController: UIViewController {
         User().getTwitterUser(success: { user in
             self.user = user
             let initialController = self.storyboard?.instantiateViewController(withIdentifier: "HamburgerMenuView")
-//            let navigationController = UINavigationController.init(rootViewController: initialController!)
             let appDelegate = UIApplication.shared.delegate as! AppDelegate
             appDelegate.window!.rootViewController = initialController
         }) { error in
